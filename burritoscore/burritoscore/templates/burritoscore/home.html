@@ -1,0 +1,21 @@
+{% extends 'burritoscore/base.html' %}
+
+{% block meta %}
+<meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+{% endblock %}
+
+{% block css %}
+<link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/map.css">
+{% endblock %}
+
+{% block content %}
+
+<div id="map-canvas"></div>
+
+{% endblock %}
+
+
+{% block javascript %}
+<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key={{ GOOGLE_MAPS_API_KEY }}"></script>
+<script type="text/javascript" src="{{ STATIC_URL }}js/map.js"></script>
+{% endblock %}

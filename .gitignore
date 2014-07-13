@@ -49,7 +49,6 @@ coverage.xml
 *.log
 *.pot
 settings.py
-settings_eburns.py
 
 # Sphinx documentation
 docs/_build/
