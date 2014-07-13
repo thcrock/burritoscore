@@ -4,9 +4,10 @@ from django.conf.urls import patterns, include, url
 # from django.contrib import admin
 # admin.autodiscover()
 
-urlpatterns = patterns('',
-    # Examples:
-    url(r'^$', 'burritoscore.views.home', name='home'),
+urlpatterns = patterns(
+	'burritoscore.views',
+    url(r'^$', 'home', name='home'),
+    url(r'^score/(?P<location>[ -_0-9A-Za-z]+)/$', 'get_score_by_location', name='get-score-by-location'),
     # url(r'^burritoscore/', include('burritoscore.foo.urls')),
 
     # Uncomment the admin/doc line below to enable admin documentation:

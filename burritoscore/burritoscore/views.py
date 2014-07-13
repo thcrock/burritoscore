@@ -15,11 +15,22 @@ def home(request):
 	return render(request, 'burritoscore/home.html', context)
 
 
-def get_score(request):
+def get_score_by_location(request, location):
 	"""
 	Returns the burrito score for a given location.
 	"""
 	if request.is_ajax():
-		return HttpResponse(json.dumps({'score': '42'}), content_type="application/json")
+		# LA lat/long
+		lat = '34.052234'
+		lng = '-118.243685'
+
+		score = {
+			'location': location,
+			'score': '42',
+			'lat': lat,
+			'lng': lng
+		}
+
+		return HttpResponse(json.dumps(score), content_type="application/json")
 
 	raise Http404
