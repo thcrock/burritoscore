@@ -153,3 +153,9 @@ LOGGING = {
         },
     }
 }
+
+# fill this in or nothing will work
+CONSUMER_KEY = ''
+CONSUMER_SECRET = ''
+TOKEN = ''
+TOKEN_SECRET = ''

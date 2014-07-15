@@ -3,6 +3,9 @@ from django.core.management.base import BaseCommand, NoArgsCommand
 from django.conf import settings
 from optparse import make_option
 
+REVIEW_COUNT_MULTIPLIER_MIN = 0.25
+REVIEW_COUNT_MULTIPLIER_MAX = 1.5
+
 class Command(BaseCommand):
     help = 'Hi'
     option_list = BaseCommand.option_list + (
@@ -11,6 +14,11 @@ class Command(BaseCommand):
 
     def scoring_function(self, business, distance_multiplier):
         review_count_multiplier = float(business['review_count']) / 100.0
+        if review_count_multiplier < REVIEW_COUNT_MULTIPLIER_MIN:
+            review_count_multiplier = REVIEW_COUNT_MULTIPLIER_MIN
+        elif review_count_multiplier > REVIEW_COUNT_MULTIPLIER_MAX:
+            review_count_multiplier = REVIEW_COUNT_MULTIPLIER_MAX
+
         score = distance_multiplier * review_count_multiplier * business['rating']
         print "distance multiplier is", distance_multiplier, "review count multiplier is", review_count_multiplier, "rating is", business['rating'], "for", business['name'], "score =", score
         return score
@@ -20,6 +28,7 @@ class Command(BaseCommand):
         search_results = yelp_api.search_query(
             location=search_location,
             term='burrito',
+            category_filter='mexican',
             radius_filter=radius,
         )
 
