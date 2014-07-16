@@ -64,11 +64,33 @@ function get_score(location) {
 }
 
 /*
+	Register the click listener for the burrito submit button.
+*/
+$('#get_burrito_score').on('click', function() {
+	var address = $('#address').val();
+	if (address != '' && address != null) {
+		get_score(address);
+	}
+});
+
+
+/*
+	Register the keypress listener so you can press enter
+	to submit the address.
+*/
+$('#address').keydown(function(event){
+	event.preventDefault();
+
+	if (event.keyCode == 13) {
+		$('#get_burrito_score').click();
+	}
+});
+
+/*
 	On page load
 */
 $(function() {
 
 	google.maps.event.addDomListener(window, 'load', initialize);
-	get_score('Motha fuckin LA beeeatch');
 
 });

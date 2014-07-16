@@ -10,7 +10,7 @@ def home(request):
 	Render the home page.
 	"""
 	context = {
-		'GOOGLE_MAPS_API_KEY': settings.GOOGLE_MAPS_API_KEY
+		'GOOGLE_MAPS_API_KEY': settings.GOOGLE_MAPS_API_KEY,
 	}
 	return render(request, 'burritoscore/home.html', context)
 
