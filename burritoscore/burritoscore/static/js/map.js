@@ -79,8 +79,6 @@ $('#get_burrito_score').on('click', function() {
 	to submit the address.
 */
 $('#address').keydown(function(event){
-	event.preventDefault();
-
 	if (event.keyCode == 13) {
 		$('#get_burrito_score').click();
 	}
