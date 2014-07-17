@@ -12,7 +12,7 @@ class Command(BaseCommand):
 
     def handle(self, **options):
         scorer = BinScorer()
-        score = scorer.score(options['location'])
+        score, businesses = scorer.score(options['location'])
         print score
 
 

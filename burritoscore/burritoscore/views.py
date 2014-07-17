@@ -3,6 +3,7 @@ import json
 from django.conf import settings
 from django.shortcuts import render
 from django.http import HttpResponse, Http404
+from burritoscore.scorers.binscorer import BinScorer
 
 
 def home(request):
@@ -15,22 +16,23 @@ def home(request):
 	return render(request, 'burritoscore/home.html', context)
 
 
+def format_business(business):
+	return {
+		'lat': business['location']['coordinate']['latitude'],
+		'lon': business['location']['coordinate']['longitude'],
+		'score': business['rating'],
+		'name': business['name'],
+	}
+
 def get_score_by_location(request, location):
 	"""
 	Returns the burrito score for a given location.
 	"""
 	if request.is_ajax():
-		# LA lat/long
-		lat = '34.052234'
-		lng = '-118.243685'
+		scorer = BinScorer()
+		score, businesses = scorer.score(location)
+		formatted_businesses = [format_business(business) for business in businesses.values() if 'coordinate' in business['location']]
 
-		score = {
-			'location': location,
-			'score': '42',
-			'lat': lat,
-			'lng': lng
-		}
-
-		return HttpResponse(json.dumps(score), content_type="application/json")
+		return HttpResponse(json.dumps({'score': score, 'businesses': formatted_businesses}), content_type="application/json")
 
 	raise Http404

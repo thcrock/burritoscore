@@ -21,7 +21,9 @@ class BinScorer(Scorer):
             businesses = self.do_radius(search_radius, location)
             for business_id, business in businesses.iteritems():
                 if business_id not in ids:
-                    scores.append(self.scoring_function(business, distance_multiplier))
+                    score = self.scoring_function(business, distance_multiplier)
+                    scores.append(score)
+                    businesses[business_id]['score'] = score
                     ids.add(business_id)
                     if business['rating'] >= 4.5 and business['review_count'] > 10:
                         boosts.append(business)
@@ -39,7 +41,7 @@ class BinScorer(Scorer):
         #print "boost", boosts
         score += len(boosts) * 5
 
-        return score
+        return (score, businesses)
 
     def scoring_function(self, business, distance_multiplier):
         review_count_multiplier = float(business['review_count']) / 100.0
@@ -65,7 +67,8 @@ class BinScorer(Scorer):
             businesses[row['id']] = {
                 'rating': row['rating'],
                 'name': row['name'],
-                'review_count': row['review_count']
+                'review_count': row['review_count'],
+                'location': row['location'],
             }
 
         return businesses
