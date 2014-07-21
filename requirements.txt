@@ -1,3 +1,4 @@
 Django==1.6.5
 yelpapi==1.2
 numpy
+geopy==0.99
