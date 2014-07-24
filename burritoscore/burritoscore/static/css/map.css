@@ -11,3 +11,8 @@ body {
 #map-canvas {
 	height: 100%
 }
+
+.business, .score {
+	font-size: 150%;
+}
+

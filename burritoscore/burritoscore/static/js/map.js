@@ -1,7 +1,7 @@
 var geocoder;
 var map;
-var score_template = '<p>{{ location }}</p><h1>{{ score }}</h1>';
-var business_template = '<p>{{ name }}</p><h1>{{ score }}</h1>';
+var score_template = '<span class=\'score\'>Your Burrito Score is <h1>{{ score }}</h1> <p>{{ location }}</p></span>';
+var business_template = '<span class=\'business\'><h3>{{ name }}</h3>{{ address }}<p>{{ distance }} meters from home<br>Review Average: <b>{{ score }}</b> based on <b>{{ num_reviews }}</b> reviews</p></span>';
 
 /*
 	Initialize the Google Map
@@ -25,7 +25,13 @@ function place_business_marker(business) {
 		position: new google.maps.LatLng(business['lat'], business['lon'])
 	});
 
-	var data = {name: business['name'], score: business['score']};
+	var data = {
+		name: business['name'],
+		score: business['rating'],
+		address: business['address'],
+		distance: business['distance'].toFixed(0),
+		num_reviews: business['review_count']
+	};
 	var rendered = Mustache.render(business_template, data);
 
 	var infowindow = new google.maps.InfoWindow({
@@ -42,7 +48,7 @@ function place_business_marker(business) {
 	Set the score at a location.
 	Need to figure out how to put custom HTML as a pin.
 */
-function display_score_at_location(location, score, businesses) {
+function display_score_at_location(location, score, radius, businesses) {
 	// Center the map on our location
 	code_address(location)
 
@@ -51,6 +57,19 @@ function display_score_at_location(location, score, businesses) {
 		map: map,
 		position: map.getCenter()
 	});
+
+	var circleOptions = {
+		strokeColor: '#FF0000',
+		strokeOpacity: 0.8,
+		strokeWeight: 2,
+		fillColor: '#FF0000',
+		fillOpacity: 0.3,
+		map: map,
+		center: map.getCenter(),
+		radius: radius,
+	}
+
+	burritoCircle = new google.maps.Circle(circleOptions);
 
 	// Render the score template
 	var data = {score: score, location: location}
@@ -80,7 +99,7 @@ function get_score(location) {
 	var url = '/score/' + location;
 
 	$.getJSON(url, function(data) {
-		display_score_at_location(location, data.score, data.businesses);
+		display_score_at_location(location, data.score, data.radius, data.businesses);
 	});
 }
 

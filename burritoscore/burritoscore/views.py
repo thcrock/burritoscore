@@ -6,6 +6,7 @@ from django.shortcuts import render
 from django.http import HttpResponse, Http404
 from geopy.geocoders import GoogleV3
 from burritoscore.scorers.binscorer import BinScorer
+from burritoscore.scorers.data import BusinessData
 
 
 def home(request):
@@ -30,30 +31,14 @@ def geolocate_business(business):
 	return (latitude, longitude)
 
 
-def format_business(business):
-	# Backfill data if it's not there and we need it.
-	if 'coordinate' not in business['location']:
-		lat, lng = geolocate_business(business)
-		business['location']['coordinate'] = {'latitude': lat, 'longitude': lng}
-
-	return {
-		'lat': business['location']['coordinate']['latitude'],
-		'lon': business['location']['coordinate']['longitude'],
-		'score': business['rating'],
-		'name': business['name'],
-	}
-
 def get_score_by_location(request, location):
 	"""
 	Returns the burrito score for a given location.
 	"""
 	if request.is_ajax():
-		scorer = BinScorer()
-		score, businesses = scorer.score(location)
+		scorer = BusinessData()
+		score, radius, businesses = scorer.score(location)
 
-		pool = Pool()
-		formatted_businesses = pool.map(format_business, businesses.values())
-
-		return HttpResponse(json.dumps({'score': score, 'businesses': formatted_businesses}), content_type="application/json")
+		return HttpResponse(json.dumps({'score': score, 'radius': radius, 'businesses': businesses.values()}), content_type="application/json")
 
 	raise Http404
