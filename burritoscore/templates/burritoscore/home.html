@@ -1,0 +1,40 @@
+{% extends 'burritoscore/base.html' %}
+
+{% block meta %}
+<meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+{% endblock %}
+
+{% block css %}
+<link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/home.css">
+<link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/map.css">
+{% endblock %}
+
+{% block content %}
+
+<div id="address-form">
+	<div id="address-form-title">
+		<h3>Find Your Burrito Score</h3>
+	</div>
+
+	<div id="address-form-content" class="panel panel-default">
+		<div class="panel-body">
+			<div class="input-group">
+				<input id="address" type="text" placeholder="2670 N Burling St., Chicago, IL 60614" class="form-control">
+				<span class="input-group-btn">
+					<button id="get_burrito_score" class="btn btn-default" type="button">Burrito!</button>
+				</span>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div id="map-canvas"></div>
+
+{% endblock %}
+
+
+{% block javascript %}
+<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key={{ GOOGLE_MAPS_API_KEY }}"></script>
+<script type="text/javascript" src="{{ STATIC_URL }}js/map.js"></script>
+<script type="text/javascript" src="{{ STATIC_URL }}js/libs/mustache.js"></script>
+{% endblock %}
