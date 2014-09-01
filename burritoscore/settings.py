@@ -1,3 +1,5 @@
+import os
+
 # Django settings for burritoscore project.
 
 DEBUG = True
@@ -155,9 +157,9 @@ LOGGING = {
 }
 
 # fill this in or nothing will work
-CONSUMER_KEY = ''
-CONSUMER_SECRET = ''
-TOKEN = ''
-TOKEN_SECRET = ''
+CONSUMER_KEY = os.environ['YELP_CONSUMER_KEY']
+CONSUMER_SECRET = os.environ['YELP_CONSUMER_SECRET']
+TOKEN = os.environ['YELP_TOKEN']
+TOKEN_SECRET = os.environ['YELP_TOKEN_SECRET']
 
-GOOGLE_MAPS_API_KEY = ''
+GOOGLE_MAPS_API_KEY = os.environ['GOOGLE_MAPS_API_KEY']
