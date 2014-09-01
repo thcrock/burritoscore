@@ -12,3 +12,4 @@ requests-oauthlib==0.4.1
 static3==0.5.1
 wsgiref==0.1.2
 yelpapi==1.2
+dj-static==0.0.6
