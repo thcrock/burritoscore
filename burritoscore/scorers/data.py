@@ -59,7 +59,6 @@ class BusinessData(Scorer):
 		businesses = self.get_all_near(latitude, longitude, RADIUS)
 		for business in businesses.values():
 			business['vorb'] = business['rating'] - replacement_burrito
-			print business['name'], business['vorb']
 		score = 0.0
 		for (multiplier, vorb_min, vorb_max) in (
 			(1.0, 0, 0.24),
