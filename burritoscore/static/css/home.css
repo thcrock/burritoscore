@@ -1,3 +1,10 @@
+@media (max-width: 640px) {
+	#address-form-content {
+		margin-top: 6rem;
+		margin-left: -6rem;
+	}
+}
+
 div#address-form {
 	position: absolute;
 	top: 10px;
