@@ -62,9 +62,10 @@ class BusinessData(Scorer):
 		score = 0.0
 		for (multiplier, vorb_min, vorb_max) in (
 			(1.0, 0, 0.24),
-			(10.0, 0.25, 0.74),
-			(15.0, 0.75, 1.24),
-			(20.0, 1.25, 5),
+            (14.0, 0.25, 0.49),
+			(20.0, 0.50, 0.74),
+			(25.0, 0.75, 1.24),
+			(40.0, 1.25, 5),
 		):
 			den = self.density(vorb_min, vorb_max, businesses.values())
 			print "density of ", vorb_min, "to", vorb_max, "=", den
